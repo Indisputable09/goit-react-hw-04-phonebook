@@ -9,25 +9,19 @@ import ContactsSection from 'components/Section';
 import { Section, Title } from './App.styled';
 
 export const App = () => {
-  const [contacts, setContacts] = useState([
-    { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
-    { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
-    { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
-    { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
-    { id: nanoid(), name: 'Diana Colean', number: '456-12-78' },
-    { id: nanoid(), name: 'Margarett Kinn', number: '467-89-89' },
-    { id: nanoid(), name: 'Nick Cherchel', number: '678-17-90' },
-    { id: nanoid(), name: 'Anna Nonear', number: '234-91-56' },
-  ]);
+  const [contacts, setContacts] = useState(
+    JSON.parse(localStorage.getItem('contacts')) ?? [
+      { id: nanoid(), name: 'Rosie Simpson', number: '459-12-56' },
+      { id: nanoid(), name: 'Hermione Kline', number: '443-89-12' },
+      { id: nanoid(), name: 'Eden Clements', number: '645-17-79' },
+      { id: nanoid(), name: 'Annie Copeland', number: '227-91-26' },
+      { id: nanoid(), name: 'Diana Colean', number: '456-12-78' },
+      { id: nanoid(), name: 'Margarett Kinn', number: '467-89-89' },
+      { id: nanoid(), name: 'Nick Cherchel', number: '678-17-90' },
+      { id: nanoid(), name: 'Anna Nonear', number: '234-91-56' },
+    ]
+  );
   const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    const contacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(contacts);
-    if (parsedContacts) {
-      setContacts(parsedContacts);
-    }
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -36,9 +30,7 @@ export const App = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const name = e.target.name.value;
-    console.log('~ name', name);
     const number = e.target.number.value;
-    console.log(contacts);
     const contactsNames = contacts.find(contact => contact.name === name);
     const contactsNumbers = contacts.find(contact => contact.number === number);
     const contact = { id: nanoid(), name, number };
